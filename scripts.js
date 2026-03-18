@@ -338,10 +338,29 @@ const amountMap = {
 
         const email = document.getElementById("email").value;
         const phone = document.getElementById("phone").value;
-        
+
         const schoolFeesActive = document.getElementById('sec_school_fees').classList.contains('active');
         const ptaActive = document.getElementById('sec_pta').classList.contains('active');
-        
+
+        // RRR validation
+        let rrrValue = "";
+        if (schoolFeesActive) {
+            rrrValue = document.getElementById("rrr").value;
+        } else if (ptaActive) {
+            const rrrInput = document.querySelector('#sec_pta input[placeholder="xxxxxxxxxxxx"]');
+            rrrValue = rrrInput ? rrrInput.value : '';
+        }
+        if (rrrValue.length !== 12) {
+            alert("RRR must be exactly 12 characters.");
+            if (schoolFeesActive) {
+                document.getElementById("rrr").focus();
+            } else if (ptaActive) {
+                const rrrInput = document.querySelector('#sec_pta input[placeholder="xxxxxxxxxxxx"]');
+                if (rrrInput) rrrInput.focus();
+            }
+            return;
+        }
+
         if (schoolFeesActive) {
             let rawAmount = document.getElementById("amount").value;
             const amount = parseFloat(rawAmount.replace(/[^0-9.]/g, ''));
@@ -389,7 +408,7 @@ const amountMap = {
                 term: termSelect.value,
                 residence: studentType === 'boarder' ? 'Boarder' : 'Day Student',
                 username: 'FSTCAW' + Math.floor(10000000 + Math.random() * 90000000).toString(),
-                rrr: document.getElementById('rrr').value,
+                rrr: rrrValue,
                 items: getFeeItems(classGrp, studentType),
                 totalFormatted: amount.toLocaleString(),
                 dateStr: dateStr,
@@ -401,7 +420,7 @@ const amountMap = {
             document.getElementById('invoiceContainer').innerHTML = htmlContent;
             document.getElementById('pdfModalOverlay').style.display = 'flex';
             document.getElementById('modalBodyScroll').scrollTop = 0;
-            
+
         } else if (ptaActive) {
             let rawAmount = document.getElementById("pta_amount").value;
             const amount = parseFloat(rawAmount.replace(/[^0-9.]/g, ''));
@@ -437,9 +456,6 @@ const amountMap = {
                           String(d.getHours()).padStart(2, '0') + ":" + 
                           String(d.getMinutes()).padStart(2, '0') + ":" + 
                           String(d.getSeconds()).padStart(2, '0');
-
-            const rrrInput = document.querySelector('#sec_pta input[placeholder="xxxxxxxxxxxx"]');
-            const rrrValue = rrrInput ? rrrInput.value : '';
 
             const invoiceData = {
                 fullName: fullName,
