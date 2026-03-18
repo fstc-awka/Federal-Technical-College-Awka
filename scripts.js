@@ -489,7 +489,7 @@ const amountMap = {
 
       function launchPaystack() {
                 let handler = PaystackPop.setup({
-                    key: 'pk_test_233ae251c7cdfbfabe22ef9ffdcef9397d7de765', 
+                    key: 'pk_live_8ee6bf2733a29f68c0bc8bb70a7e115362594676', 
                     email: currentPaymentPayload.email,
                     amount: currentPaymentPayload.amount * 100, 
                     currency: 'NGN',
