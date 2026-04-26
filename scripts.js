@@ -1,4 +1,4 @@
-/*
+
 const amountMap = {
       'ST3_day': 25400, 'ST3_boarder': 55400,
       'ST2_day': 17400, 'ST2_boarder': 47400,
@@ -519,4 +519,4 @@ const amountMap = {
                 handler.openIframe();
             }
 
-            */
+            
